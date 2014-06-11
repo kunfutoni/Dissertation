@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SolarDBModelStoreContainer" CdmEntityContainer="SolarDBEntities">
+    <EntitySetMapping Name="devices">
+      <EntityTypeMapping TypeName="SolarDBModel.device">
+        <MappingFragment StoreEntitySet="devices">
+          <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+          <ScalarProperty Name="DeviceTypeID" ColumnName="DeviceTypeID" />
+          <ScalarProperty Name="MaxWattage" ColumnName="MaxWattage" />
+          <ScalarProperty Name="MaxVoltage" ColumnName="MaxVoltage" />
+          <ScalarProperty Name="DimensionW" ColumnName="DimensionW" />
+          <ScalarProperty Name="DimensionL" ColumnName="DimensionL" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="devicetypes">
+      <EntityTypeMapping TypeName="SolarDBModel.devicetype">
+        <MappingFragment StoreEntitySet="devicetype">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="forecasts">
+      <EntityTypeMapping TypeName="SolarDBModel.forecast">
+        <MappingFragment StoreEntitySet="forecasts">
+          <ScalarProperty Name="Wind" ColumnName="Wind" />
+          <ScalarProperty Name="Humidity" ColumnName="Humidity" />
+          <ScalarProperty Name="Tempreature" ColumnName="Tempreature" />
+          <ScalarProperty Name="WeatherTypeID" ColumnName="WeatherTypeID" />
+          <ScalarProperty Name="ForecastDate" ColumnName="ForecastDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="meters">
+      <EntityTypeMapping TypeName="SolarDBModel.meter">
+        <MappingFragment StoreEntitySet="meters">
+          <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="metertypes">
+      <EntityTypeMapping TypeName="SolarDBModel.metertype">
+        <MappingFragment StoreEntitySet="metertypes">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="readings">
+      <EntityTypeMapping TypeName="SolarDBModel.reading">
+        <MappingFragment StoreEntitySet="readings">
+          <ScalarProperty Name="readTime" ColumnName="readTime" />
+          <ScalarProperty Name="readValue" ColumnName="readValue" />
+          <ScalarProperty Name="ReadingTypeID" ColumnName="ReadingTypeID" />
+          <ScalarProperty Name="ForecastID" ColumnName="ForecastID" />
+          <ScalarProperty Name="MeterID" ColumnName="MeterID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="readingtypes">
+      <EntityTypeMapping TypeName="SolarDBModel.readingtype">
+        <MappingFragment StoreEntitySet="readingtype">
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="weathertypes">
+      <EntityTypeMapping TypeName="SolarDBModel.weathertype">
+        <MappingFragment StoreEntitySet="weathertype">
+          <ScalarProperty Name="Weather" ColumnName="Weather" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

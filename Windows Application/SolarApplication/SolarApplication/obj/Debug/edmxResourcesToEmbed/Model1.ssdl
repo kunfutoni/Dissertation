@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SolarDBModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="devices">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="DimensionL" Type="int" />
+    <Property Name="DimensionW" Type="int" />
+    <Property Name="MaxVoltage" Type="float" />
+    <Property Name="MaxWattage" Type="float" />
+    <Property Name="DeviceTypeID" Type="int" />
+    <Property Name="MeterID" Type="int" />
+  </EntityType>
+  <EntityType Name="devicetype">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="forecasts">
+    <Key>
+      <PropertyRef Name="ForecastDate" />
+    </Key>
+    <Property Name="ForecastDate" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="WeatherTypeID" Type="int" Nullable="false" />
+    <Property Name="Tempreature" Type="float" Nullable="false" />
+    <Property Name="Humidity" Type="float" Nullable="false" />
+    <Property Name="Wind" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="meters">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TypeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="metertypes">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="readings">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MeterID" Type="int" Nullable="false" />
+    <Property Name="ForecastID" Type="timestamp" Precision="0" />
+    <Property Name="ReadingTypeID" Type="int" />
+    <Property Name="readValue" Type="double" Nullable="false" />
+    <Property Name="readTime" Type="timestamp" Precision="0" Nullable="false" />
+  </EntityType>
+  <EntityType Name="readingtype">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="weathertype">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Weather" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="DeviceTypeFK">
+    <End Role="devicetype" Type="Self.devicetype" Multiplicity="0..1" />
+    <End Role="devices" Type="Self.devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="devicetype">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="devices">
+        <PropertyRef Name="DeviceTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="forecasts_ibfk_2">
+    <End Role="weathertype" Type="Self.weathertype" Multiplicity="1" />
+    <End Role="forecasts" Type="Self.forecasts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="weathertype">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="forecasts">
+        <PropertyRef Name="WeatherTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MeterIdFK">
+    <End Role="meters" Type="Self.meters" Multiplicity="0..1" />
+    <End Role="devices" Type="Self.devices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="devices">
+        <PropertyRef Name="MeterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="meters_ibfk_1">
+    <End Role="metertypes" Type="Self.metertypes" Multiplicity="1" />
+    <End Role="meters" Type="Self.meters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="metertypes">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="meters">
+        <PropertyRef Name="TypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="readings_ibfk_2">
+    <End Role="meters" Type="Self.meters" Multiplicity="1" />
+    <End Role="readings" Type="Self.readings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="meters">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="readings">
+        <PropertyRef Name="MeterID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="readings_ibfk_3">
+    <End Role="readingtype" Type="Self.readingtype" Multiplicity="0..1" />
+    <End Role="readings" Type="Self.readings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="readingtype">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="readings">
+        <PropertyRef Name="ReadingTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SolarDBModelStoreContainer">
+    <EntitySet Name="devices" EntityType="Self.devices" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="devicetype" EntityType="Self.devicetype" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="forecasts" EntityType="Self.forecasts" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="meters" EntityType="Self.meters" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="metertypes" EntityType="Self.metertypes" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="readings" EntityType="Self.readings" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="readingtype" EntityType="Self.readingtype" Schema="solardb" store:Type="Tables" />
+    <EntitySet Name="weathertype" EntityType="Self.weathertype" Schema="solardb" store:Type="Tables" />
+    <AssociationSet Name="DeviceTypeFK" Association="Self.DeviceTypeFK">
+      <End Role="devicetype" EntitySet="devicetype" />
+      <End Role="devices" EntitySet="devices" />
+    </AssociationSet>
+    <AssociationSet Name="forecasts_ibfk_2" Association="Self.forecasts_ibfk_2">
+      <End Role="weathertype" EntitySet="weathertype" />
+      <End Role="forecasts" EntitySet="forecasts" />
+    </AssociationSet>
+    <AssociationSet Name="MeterIdFK" Association="Self.MeterIdFK">
+      <End Role="meters" EntitySet="meters" />
+      <End Role="devices" EntitySet="devices" />
+    </AssociationSet>
+    <AssociationSet Name="meters_ibfk_1" Association="Self.meters_ibfk_1">
+      <End Role="metertypes" EntitySet="metertypes" />
+      <End Role="meters" EntitySet="meters" />
+    </AssociationSet>
+    <AssociationSet Name="readings_ibfk_2" Association="Self.readings_ibfk_2">
+      <End Role="meters" EntitySet="meters" />
+      <End Role="readings" EntitySet="readings" />
+    </AssociationSet>
+    <AssociationSet Name="readings_ibfk_3" Association="Self.readings_ibfk_3">
+      <End Role="readingtype" EntitySet="readingtype" />
+      <End Role="readings" EntitySet="readings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
